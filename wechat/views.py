@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.http import HttpResponse
@@ -6,6 +8,7 @@ from django.template import loader, Context
 from xml.etree import ElementTree as ET
 import time
 import hashlib
+
 
 # Create your views here.
 
@@ -29,3 +32,6 @@ class WeChat(View):
 
         if hashstr == signature:
             return HttpResponse(echostr)
+
+    def post(self, req):
+        pass
