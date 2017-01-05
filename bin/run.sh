@@ -5,7 +5,7 @@ LoadModule wsgi_module modules/mod_wsgi.so
 AddType text/html .py
 WSGIScriptAlias / /data/wechat/wh/wsgi.py
 WSGIPythonPath /data/wechat/wh/
-<Directory /data/wechat/wh>
+<Directory /data/wechat/wh/>
     <Files wsgi.py>
         Require all granted
     </Files>
