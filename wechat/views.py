@@ -12,6 +12,16 @@ import hashlib
 
 # Create your views here.
 
+
+def health(req):
+    """
+    health
+    :param req:
+    :return:
+    """
+    return HttpResponse('ok')
+
+
 class WeChat(View):
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
@@ -35,3 +45,5 @@ class WeChat(View):
 
     def post(self, req):
         pass
+
+
