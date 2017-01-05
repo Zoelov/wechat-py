@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cat >> /usr/local/apache2/conf/httpd.conf <<EOF
-ServerName localhost:8001
+ServerName localhost:80
 LoadModule wsgi_module modules/mod_wsgi.so
 AddType text/html .py
 WSGIScriptAlias / /data/wechat/wh/wsgi.py
