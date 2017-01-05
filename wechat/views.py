@@ -8,9 +8,12 @@ from django.template import loader, Context
 from xml.etree import ElementTree as ET
 import time
 import hashlib
+import logging
 
 
 # Create your views here.
+
+logger = logging.getLogger(__name__)
 
 
 def health(req):
@@ -19,6 +22,7 @@ def health(req):
     :param req:
     :return:
     """
+    logger.info('health test')
     return HttpResponse('ok')
 
 
@@ -28,6 +32,7 @@ class WeChat(View):
         return super(WeChat, self).dispatch(*args, **kwargs)
 
     def get(self, request):
+        logger.info('test......')
         signature = request.GET.get('signature', None)
         timestamp = request.GET.get('timestamp', None)
         nonce = request.GET.get('nonce', None)

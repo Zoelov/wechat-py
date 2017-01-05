@@ -102,3 +102,49 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOG_PATH = os.path.join(BASE_DIR, 'logs')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] [%(levelname)s]  [%(name)s::%(lineno)d] >>>>>>>func: %(funcName)s : %(message)s'
+        },
+    },
+    'filters': {
+    },
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_PATH, 'wh.log'),
+            'maxBytes': 1024 * 1024 * 100,  # 100 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'wechat': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_PATH, 'wechat.log'),
+            'maxBytes': 1024 * 1024 * 100,  # 100 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'wechat': {
+            'handlers': ['wechat', 'console'],
+            'level': 'INFO',
+            'propagate': False
+        },
+
+    }
+}
+
