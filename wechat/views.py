@@ -56,8 +56,15 @@ class WeChat(View):
         from_user_name = tree.find('FromUserName').text
         create_time = tree.find('CreateTime').text
         msg_type = tree.find('MsgType').text
-        msg = tree.find('Content').text
         msg_id = tree.find('MsgId').text
+        if msg_type == 'text':
+            msg = tree.find('Content').text
+        if msg_type == 'image':
+            pic_url = tree.find('PicUrl').text
+            media_id = tree.find('MediaId').text
+        if msg_type == 'voice':
+            media_id = tree.find('MediaId').text
+            format = tree.find('Format').text
 
         logger.info(vars())
 

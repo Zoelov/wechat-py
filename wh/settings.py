@@ -83,6 +83,13 @@ DATABASES = {
     }
 }
 
+try:
+    from wh.user_settings import *
+except Exception as exc:
+    pass
+
+# 获取access_token url
+ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
