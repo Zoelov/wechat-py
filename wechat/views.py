@@ -79,7 +79,7 @@ class WeChat(View):
         :return:
         """
         now = time.time()
-        str = """
+        replay = """
             <xml>
                 <ToUserName><![CDATA[%s]]></ToUserName>
                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -89,6 +89,6 @@ class WeChat(View):
             </xml>
         """ % (to_user_name, from_user_name, str(int(now)), msg_type, msg)
 
-        return str
+        return replay
 
 
