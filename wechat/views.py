@@ -49,6 +49,14 @@ class WeChat(View):
             return HttpResponse(echostr)
 
     def post(self, req):
-        pass
+        logger.info('接收到消息')
+        user_name = req.POST.get('ToUserName')
+        from_user_name = req.POST.get('FromUserName')
+        create_time = req.POST.get('CreateTime')
+        msg_type = req.POST.get('MsgType')
+        msg = req.POST.get('Content')
+        msg_id = req.POST.get('MsgId')
+
+        logger.info(vars())
 
 
