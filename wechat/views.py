@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.http import HttpResponse
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader, Context
 from xml.dom.minidom import Document
@@ -38,7 +39,7 @@ class WeChat(View):
         nonce = request.GET.get('nonce', None)
         echostr = request.GET.get('echostr', None)
 
-        token = "wanghaotoken"
+        token = settings.TOKEN
 
         hashlist = [token, timestamp, nonce]
         hashlist.sort()

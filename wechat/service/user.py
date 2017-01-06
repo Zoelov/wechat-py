@@ -93,5 +93,23 @@ def get_access_token(app_id, app_secret):
         raise exc
 
 
+def save_users():
+    """
+    保存用户
+    :param app_id:
+    :param app_secret:
+    :return:
+    """
+    app_id = settings.USER_APP_ID
+    app_secret = settings.USER_APP_SECRET
+    try:
+        ret = get_access_token(app_id, app_secret)
+        if ret:
+            pass
+    except Exception as exc:
+        pass
+
+
+
 
 

@@ -84,6 +84,10 @@ DATABASES = {
     }
 }
 
+TOKEN = "your token"
+USER_APP_ID = 'your app id'
+USER_APP_SECRET = 'your app secret'
+
 try:
     from wh.user_settings import *
 except Exception as exc:
