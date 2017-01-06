@@ -5,11 +5,11 @@ from django.views.generic.base import View
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader, Context
+from xml.dom.minidom import Document
 from xml.etree import ElementTree as ET
 import time
 import hashlib
 import logging
-
 
 # Create your views here.
 
@@ -33,10 +33,6 @@ class WeChat(View):
 
     def get(self, request):
         logger.info('test......')
-        if request.method == 'GET':
-            logger.info('get method, request=%s' % request)
-        if request.method == 'POST':
-            logger.info('post method, request=%s' % request)
         signature = request.GET.get('signature', None)
         timestamp = request.GET.get('timestamp', None)
         nonce = request.GET.get('nonce', None)
@@ -65,6 +61,29 @@ class WeChat(View):
 
         logger.info(vars())
 
-        return HttpResponse(u'哈哈')
+        result = self.replay_text(from_user_name, user_name, u'哈哈')
+        return HttpResponse(result, mimetype='application/xml')
+
+    def replay_text(self, to_user_name, from_user_name, msg, msg_type='text'):
+        """
+        回复文本消息
+        :param to_user_name:
+        :param from_user_name:
+        :param msg:
+        :param msg_type:
+        :return:
+        """
+        now = time.time()
+        str = """
+            <xml>
+                <ToUserName><![CDATA[%s]]></ToUserName>
+                <FromUserName><![CDATA[%s]]></FromUserName>
+                <CreateTime>%s</CreateTime>
+                <MsgType><![CDATA[%s]]></MsgType>
+                <Content><![CDATA[%s]]></Content>
+            </xml>
+        """ % (to_user_name, from_user_name, str(int(now)), msg_type, msg)
+
+        return str
 
 
