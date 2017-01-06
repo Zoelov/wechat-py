@@ -33,6 +33,10 @@ class WeChat(View):
 
     def get(self, request):
         logger.info('test......')
+        if request.method == 'GET':
+            logger.info('get method, request=%s' % request)
+        if request.method == 'POST':
+            logger.info('post method, request=%s' % request)
         signature = request.GET.get('signature', None)
         timestamp = request.GET.get('timestamp', None)
         nonce = request.GET.get('nonce', None)
