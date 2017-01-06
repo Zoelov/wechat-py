@@ -64,10 +64,10 @@ class WeChat(View):
         try:
             result = self.replay_text(from_user_name, user_name, u'哈哈')
             logger.info('replay is:%s' % result)
-            return HttpResponse(result, mimetype='application/xml')
+            return HttpResponse(result, content_type='application/xml')
         except Exception as exc:
             logger.error(u'发生异常，error msg:%s' % exc.message, exc_info=True)
-            return HttpResponse('', mimetype='application/xml')
+            return HttpResponse('', content_type='application/xml')
 
     def replay_text(self, to_user_name, from_user_name, msg, msg_type='text'):
         """
