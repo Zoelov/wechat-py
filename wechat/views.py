@@ -38,7 +38,7 @@ class WeChat(View):
         nonce = request.GET.get('nonce', None)
         echostr = request.GET.get('echostr', None)
 
-        token = "this is wanghao's test"
+        token = "wanghaotoken"
 
         hashlist = [token, timestamp, nonce]
         hashlist.sort()
