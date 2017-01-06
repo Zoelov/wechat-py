@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from utils import public
+from orm.manager.user import OpenInfoManager
 
 # Create your models here.
 
@@ -24,6 +25,8 @@ class OpenInfo(models.Model):
     total = models.IntegerField('total ', help_text=u'关注者总数')
     count = models.IntegerField('count', help_text=u'拉取的openid个数')
     next_openid = models.CharField('next open id', max_length=64, blank=True, null=True)
+
+    objects = OpenInfoManager()
 
     class Meta:
         db_table = 'wechat_open_info'
