@@ -50,13 +50,17 @@ class WeChat(View):
 
     def post(self, req):
         logger.info('接收到消息')
-        user_name = req.POST.get('ToUserName')
-        from_user_name = req.POST.get('FromUserName')
-        create_time = req.POST.get('CreateTime')
-        msg_type = req.POST.get('MsgType')
-        msg = req.POST.get('Content')
-        msg_id = req.POST.get('MsgId')
+        logger.info('body=%s' % req.body)
+        tree = ET.fromstring(req.body)
+        user_name = tree.find('ToUserName').text
+        from_user_name = tree.find('FromUserName').text
+        create_time = tree.find('CreateTime').text
+        msg_type = tree.find('MsgType').text
+        msg = tree.find('Content').text
+        msg_id = tree.find('MsgId').text
 
         logger.info(vars())
+
+        return HttpResponse(u'哈哈')
 
 
