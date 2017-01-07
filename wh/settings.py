@@ -95,6 +95,8 @@ except Exception as exc:
 
 # 获取access_token url
 ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
+ACCESS_OPEN_ID = 'https://api.weixin.qq.com/cgi-bin/user/get?'
+ACCESS_USER_URL = 'https://api.weixin.qq.com/cgi-bin/user/info?'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
 from utils import public
-from orm.manager.user import OpenInfoManager
+from orm.manager.user import OpenInfoManager, UsersManager
 
 # Create your models here.
 
@@ -48,6 +48,8 @@ class User(models.Model):
     unionid = models.CharField('unionid', blank=True, null=True, max_length=36)
     remark = models.CharField('remark', max_length=36, help_text=u'对关注者的备注')
     groupid = models.CharField('groupid', max_length=36)
+
+    object = UsersManager()
 
     class Meta:
         db_table = 'wechat_user'

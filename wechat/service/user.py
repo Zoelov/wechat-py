@@ -93,21 +93,48 @@ def get_access_token(app_id, app_secret):
         raise exc
 
 
-def save_users():
+def get_open_id(access_token, next_openid):
     """
-    保存用户
-    :param app_id:
-    :param app_secret:
-    :return:
+    获取openid
     """
-    app_id = settings.USER_APP_ID
-    app_secret = settings.USER_APP_SECRET
+    if next_openid is None:
+        url = settings.ACCESS_OPEN_ID + 'access_token=%s&next_openid=' % access_token
+    else:
+        url = settings.ACCESS_OPEN_ID + 'access_token=%s&next_openid=%s' % (access_token, next_openid)
+    logger.info('url = %s' % url)
     try:
-        ret = get_access_token(app_id, app_secret)
-        if ret:
-            pass
+        ret = RequestAPI.access_data(url, 'GET')
+        if ret.get('status') == 200:
+            logger.info(u'获取openid成功')
+            return ret.get('data')
+        else:
+            logger.error(u'获取openid失败，errcode=%s errormsg:%s' % (ret.get('data').get('errcode'),ret.get('data').get('errmsg')))
+            return None
     except Exception as exc:
-        pass
+        logger.error(u'获取openid发生异常，error msg:%s' % exc.message, exc_info=True)
+        raise exc
+
+
+def get_users(access_token, open_id, lang='zh_CN'):
+    """
+    获取用户信息
+    """
+    url = settings.ACCESS_USER_URL + 'access_token=%s&openid=%s&lang=%s' % (access_token, open_id, lang)
+
+    try:
+        ret = RequestAPI.access_data(url, 'GET')
+        if ret.get('status') == 200:
+            logger.info(u'获取用户信息成功')
+            return ret.get('data')
+        else:
+            logger.error(u'获取用户信息失败, errcode=%s errormsg:%s' % (
+                ret.get('data').get('errcode'), ret.get('data').get('errmsg')
+            ))
+            return None
+    except Exception as exc:
+        logger.error(u'获取用户信息发生异常，error msg:%s' % exc.message, exc_info=True)
+        raise exc
+
 
 
 

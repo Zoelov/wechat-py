@@ -1,9 +1,39 @@
 # -*- coding:utf-8 -*-
-from django.db import  models
+from django.db import models
 import logging
 
 
 logger = logging.getLogger(__name__)
+
+
+class UsersManager(models.Manager):
+    def add_user(self, open_id, subscribe, nickname, sex, city, country, province, language, headimgurl, subscribe_time, unionid, remark, groupid):
+        """
+        """
+        try:
+            user = self.model(
+                open=open_id,
+                subscribe=subscribe,
+                nickname=nickname,
+                sex=sex,
+                city=city,
+                country=country,
+                province=province,
+                language=language,
+                headimgurl=headimgurl,
+                subscribe_time=subscribe_time,
+                unionid=unionid,
+                remark=remark,
+                groupid=groupid
+            )
+            user.save()
+        except Exception as exc:
+            logger.error(u'插入用户信息发生异常, error msg:%s' % exc.message, exc_info=True)
+            raise exc
+
+
+
+
 
 
 class OpenInfoManager(models.Manager):
