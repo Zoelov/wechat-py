@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
-from wechat.service.user import get_access_token, get_open_id, get_users
+from service.user import get_access_token, get_open_id, get_users
 import logging
 from orm import models as orm_models
 from time import sleep
