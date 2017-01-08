@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 import os
 import django
+if django.VERSION >= (1, 7):  # 自动判断版本
+    django.setup()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wh.settings")
 
-if django.VERSION >= (1, 7):  # 自动判断版本
-    django.setup()
 from django.conf import settings
 from service.user import get_access_token, get_open_id, get_users
 import logging
@@ -84,5 +84,9 @@ class Task(object):
                 continue
 
 if __name__ == '__main__':
-    task = Task()
-    task.run()
+    try:
+        task = Task()
+        task.run()
+    except Exception as exc:
+        logger.error(u'发生异常')
+        exit()
