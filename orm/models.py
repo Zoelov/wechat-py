@@ -20,22 +20,22 @@ SEX = (
 )
 
 
-class OpenInfo(models.Model):
-    id = models.CharField('open id', max_length=64, primary_key=True)
-    total = models.IntegerField('total ', help_text=u'关注者总数')
-    count = models.IntegerField('count', help_text=u'拉取的openid个数')
-    next_openid = models.CharField('next open id', max_length=64, blank=True, null=True)
-
-    objects = OpenInfoManager()
-
-    class Meta:
-        db_table = 'wechat_open_info'
+# class OpenInfo(models.Model):
+#     id = models.CharField('open id', max_length=64, primary_key=True)
+#     total = models.IntegerField('total ', help_text=u'关注者总数')
+#     count = models.IntegerField('count', help_text=u'拉取的openid个数')
+#     next_openid = models.CharField('next open id', max_length=64, blank=True, null=True)
+#
+#     objects = OpenInfoManager()
+#
+#     class Meta:
+#         db_table = 'wechat_open_info'
 
 
 class User(models.Model):
     id = models.CharField('User id', max_length=36, primary_key=True, default=public.create_uuid('user'),
                           help_text='user list')
-    open = models.ForeignKey(OpenInfo, blank=True, null=True)
+    open_id = models.CharField('open id', max_length=64, blank=True, null=True)
     subscribe = models.BooleanField('subscribe', choices=IS_SUBSCRIBE, default=1)
     nickname = models.CharField('nickname', max_length=36)
     sex = models.BooleanField('sex', choices=SEX, default=0)

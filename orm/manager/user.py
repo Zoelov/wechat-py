@@ -12,7 +12,7 @@ class UsersManager(models.Manager):
         """
         try:
             user = self.model(
-                open=open_id,
+                open_id=open_id,
                 subscribe=subscribe,
                 nickname=nickname,
                 sex=sex,

@@ -17,6 +17,7 @@ Alias /wechat/static/ /data/wechat/wechat/static/
 
 EOF
 service httpd start
+python ../wechat/user.py &
 
 chmod -R 777 /data/wechat/logs/
 
