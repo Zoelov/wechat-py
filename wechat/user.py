@@ -27,7 +27,7 @@ import logging
 from orm import models as orm_models
 from time import sleep
 
-logger = logging.getLogger('task')
+logger = logging.getLogger('wechat.user')
 
 
 class Task(object):
