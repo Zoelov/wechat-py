@@ -44,44 +44,44 @@ class Task(object):
         """
         """
         try:
-            token = get_access_token(self.app_id, self.app_secret)
-            if token:
-                logger.info(u'获取access_token成功')
-                self.access_token = token.get('access_token')
-                self.expires = token.get('expires_in')
+            if not self.access_token:
+                token = get_access_token(self.app_id, self.app_secret)
+                if token:
+                    logger.info(u'获取access_token成功')
+                    self.access_token = token.get('access_token')
+                    self.expires = token.get('expires_in')
+            open = get_open_id(self.access_token, self.next_openid)
+            if open:
+                logger.info(u'获取openid list成功')
+                self.total = open.get('total')
+                self.count = open.get('count')
+                self.next_openid = open.get('next_openid')
 
-                open = get_open_id(self.access_token, self.next_openid)
-                if open:
-                    logger.info(u'获取openid list成功')
-                    self.total = open.get('total')
-                    self.count = open.get('count')
-                    self.next_openid = open.get('next_openid')
+                open_id_list = open.get('data').get('open_id_list')
+                for index in open_id_list:
+                    user_obj = orm_models.User.objects.filter(open_id=index)
+                    if user_obj.exists():
+                        logger.info(u'此open_id已经存在，open_id=%s' % index)
+                        continue
+                    users = get_users(self.access_token, index)
+                    if users:
+                        logger.info('users=%s' % users)
+                        orm_models.User.object.add_user(
+                            users.get('openid'),
+                            users.get('subscribe'),
+                            users.get('nickname'),
+                            users.get('sex'),
+                            users.get('city'),
+                            users.get('country'),
+                            users.get('province'),
+                            users.get('language'),
+                            users.get('headimgurl'),
+                            users.get('subscribe_time'),
+                            users.get('unionid'),
+                            users.get('remark'),
+                            users.get('groupid')
 
-                    open_id_list = open.get('data')
-                    for index in open_id_list:
-                        user_obj = orm_models.User.objects.filter(open_id=index)
-                        if user_obj.exists():
-                            logger.info(u'此open_id已经存在，open_id=%s' % index)
-                            continue
-                        users = get_users(self.access_token, index)
-                        if users:
-                            logger.info('users=%s' % users)
-                            orm_models.User.object.add_user(
-                                users.get('openid'),
-                                users.get('subscribe'),
-                                users.get('nickname'),
-                                users.get('sex'),
-                                users.get('city'),
-                                users.get('country'),
-                                users.get('province'),
-                                users.get('language'),
-                                users.get('headimgurl'),
-                                users.get('subscribe_time'),
-                                users.get('unionid'),
-                                users.get('remark'),
-                                users.get('groupid')
-
-                            )
+                        )
         except Exception as exc:
             logger.error(u'获取用户信息发生异常，error msg:%s' % exc.message, exc_info=True)
             raise exc
