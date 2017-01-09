@@ -54,24 +54,24 @@ class WeChat(View):
         logger.info('接收到消息')
         logger.info('body=%s' % req.body)
         tree = ET.fromstring(req.body)
-        user_name = tree.find('ToUserName').text if tree.find('ToUserName') else None
-        from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') else None
-        create_time = tree.find('CreateTime').text if tree.find('CreateTime') else None
-        msg_type = tree.find('MsgType').text if tree.find('MsgType') else None
-        msg_id = tree.find('MsgId').text if tree.find('MsgId') else None
-        msg = tree.find('Content').text if tree.find('Content') else None
-        pic_url = tree.find('PicUrl').text if tree.find('PicUrl') else None
-        media_id = tree.find('MediaId').text if tree.find('MediaId') else None
-        format = tree.find('Format').text if tree.find('Format') else None
-        recognition = tree.find('Recognition').text if tree.find('Recognition') else None
-        thumb_media_id = tree.find('ThumbMediaId').text if tree.find('ThumbMediaId') else None
-        location_x = tree.find('Location_X').text if tree.find('Location_X') else None
-        location_y = tree.find('Location_Y').text if tree.find('Location_Y') else None
-        scale = tree.find('Scale').text if tree.find('Scale') else None
-        label = tree.find('Label').text if tree.find('Label') else None
-        title = tree.find('Title').text if tree.find('Title') else None
-        description = tree.find('Description').text if tree.find('Description') else None
-        url = tree.find('Url').text if tree.find('Url') else None
+        user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
+        from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
+        create_time = tree.find('CreateTime').text if tree.find('CreateTime') is not None else None
+        msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
+        msg_id = tree.find('MsgId').text if tree.find('MsgId') is not None else None
+        msg = tree.find('Content').text if tree.find('Content') is not None else None
+        pic_url = tree.find('PicUrl').text if tree.find('PicUrl') is not None else None
+        media_id = tree.find('MediaId').text if tree.find('MediaId') is not None else None
+        format = tree.find('Format').text if tree.find('Format') is not None else None
+        recognition = tree.find('Recognition').text if tree.find('Recognition') is not None else None
+        thumb_media_id = tree.find('ThumbMediaId').text if tree.find('ThumbMediaId') is not None else None
+        location_x = tree.find('Location_X').text if tree.find('Location_X') is not None else None
+        location_y = tree.find('Location_Y').text if tree.find('Location_Y') is not None else None
+        scale = tree.find('Scale').text if tree.find('Scale') is not None else None
+        label = tree.find('Label').text if tree.find('Label') is not None else None
+        title = tree.find('Title').text if tree.find('Title') is not None else None
+        description = tree.find('Description').text if tree.find('Description') is not None else None
+        url = tree.find('Url').text if tree.find('Url') is not None else None
 
         logger.info(vars())
 

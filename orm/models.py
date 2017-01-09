@@ -48,7 +48,7 @@ MSG_TYPE = (
 
 
 class User(models.Model):
-    id = models.CharField('open id', primary_key=True, max_length=64)
+    id = models.CharField('open id', primary_key=True, max_length=64, default=None)
     subscribe = models.BooleanField('subscribe', choices=IS_SUBSCRIBE, default=1)
     nickname = models.CharField('nickname', max_length=36)
     sex = models.CharField('sex', choices=SEX, default=0, max_length=1)
