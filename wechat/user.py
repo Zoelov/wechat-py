@@ -27,7 +27,7 @@ import logging
 from orm import models as orm_models
 from time import sleep
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('task')
 
 
 class Task(object):
