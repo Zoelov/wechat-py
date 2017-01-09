@@ -17,8 +17,8 @@ Alias /wechat/static/ /data/wechat/wechat/static/
 
 EOF
 service httpd start
-cd /data/wechat/wechat/
-nohup python user.py &
+#cd /data/wechat/wechat/
+#nohup python user.py &
 
 chmod -R 777 /data/wechat/logs/
 
