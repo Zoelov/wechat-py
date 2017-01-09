@@ -35,7 +35,7 @@ class RecManager(models.Manager):
         """
         try:
             obj = self.model(
-                from_user=from_user,
+                from_user_id=from_user,
                 msg_type=msg_type,
                 create_time=create_time,
                 msg_content=msg_content,
