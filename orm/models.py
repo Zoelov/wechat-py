@@ -85,7 +85,7 @@ class AccessToken(models.Model):
 class RecMessage(models.Model):
     id = models.CharField('msg id', max_length=36, primary_key=True, default=public.create_uuid('msg'))
     from_user = models.ForeignKey(User)
-    msg_type = models.CharField('msg type', choices=MSG_TYPE, default=0, max_length=2, help_text=u'消息类型')
+    msg_type = models.CharField('msg type', choices=MSG_TYPE, default=0, max_length=10, help_text=u'消息类型')
     create_time = models.DateTimeField('create_time', help_text=u'消息的创建时间')
     msg_content = models.TextField('msg content', null=True, blank=True, help_text=u'text类型消息内容')
     msg_id = models.CharField('msg id', max_length=64, help_text=u'消息id')
@@ -112,7 +112,7 @@ class ReplayMessage(models.Model):
     id = models.CharField('msg id', max_length=36, primary_key=True, default=public.create_uuid('msg'))
     rec = models.ForeignKey(RecMessage)
     to_user = models.ForeignKey(User)
-    msg_type = models.CharField('msg type', choices=MSG_TYPE, default=0, max_length=2, help_text=u'消息类型')
+    msg_type = models.CharField('msg type', choices=MSG_TYPE, default=0, max_length=10, help_text=u'消息类型')
     create_time = models.DateTimeField('create_time', help_text=u'消息的创建时间')
     msg_content = models.TextField('msg content', null=True, blank=True, help_text=u'text类型消息内容')
     media_id = models.CharField('media id', null=True, blank=True, max_length=64, help_text=u'图片消息媒体id')

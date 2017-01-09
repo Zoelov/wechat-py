@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 import logging
+import time
 
 
 logger = logging.getLogger(__name__)
@@ -34,10 +35,12 @@ class RecManager(models.Manager):
         :return:
         """
         try:
+            time_arry = time.localtime(float(create_time))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             obj = self.model(
                 from_user_id=from_user,
                 msg_type=msg_type,
-                create_time=create_time,
+                create_time=time_str,
                 msg_content=msg_content,
                 msg_id=msg_id,
                 pic_url=pic_url,
@@ -85,11 +88,13 @@ class RepManager(models.Manager):
         :return:
         """
         try:
+            time_arry = time.localtime(float(create_time))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             obj = self.model(
                 rec=rec_id,
                 to_user=to_user_id,
                 msg_type=msg_type,
-                create_time=create_time,
+                create_time=time_str,
                 msg_content=msg_content,
                 media_id=media_id,
                 title=title,

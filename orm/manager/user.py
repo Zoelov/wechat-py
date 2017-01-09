@@ -2,6 +2,7 @@
 from django.db import models
 import logging
 import datetime
+import time
 
 
 logger = logging.getLogger(__name__)
@@ -12,6 +13,8 @@ class UsersManager(models.Manager):
         """
         """
         try:
+            time_arry = time.localtime(float(subscribe_time))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             user = self.model(
                 open_id=open_id,
                 subscribe=subscribe,
@@ -22,7 +25,7 @@ class UsersManager(models.Manager):
                 province=province,
                 language=language,
                 headimgurl=headimgurl,
-                subscribe_time=subscribe_time,
+                subscribe_time=time_str,
                 unionid=unionid,
                 remark=remark,
                 groupid=groupid
@@ -45,10 +48,12 @@ class AccessManager(models.Manager):
         :return:
         """
         try:
+            time_arry = time.localtime(float(create_time))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             obj = self.model(
                 access_token=access_token,
                 expires_time=expires,
-                create_time=create_time,
+                create_time=time_str,
                 end_time=end_time,
                 is_valid=is_valid
             )
