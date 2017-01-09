@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import datetime
 from os.path import dirname, abspath
 
 reload(sys)
@@ -44,12 +45,24 @@ class Task(object):
         """
         """
         try:
-            if not self.access_token:
+            now = datetime.datetime.now
+            access = orm_models.AccessToken.objects.filter(is_valid=1, end_time__gt=now)
+            if access.exists():
+                self.access_token = access[0].access_token
+            else:
+                orm_models.AccessToken.objects.set_invalid()
+
                 token = get_access_token(self.app_id, self.app_secret)
                 if token:
                     logger.info(u'获取access_token成功')
                     self.access_token = token.get('access_token')
                     self.expires = token.get('expires_in')
+
+                    # 保存token信息
+                    now = datetime.datetime.now()
+                    end_time = now + datetime.timedelta(seconds=self.expires)
+                    orm_models.AccessToken.objects.add_token(self.access_token, self.expires, now, end_time)
+
             open = get_open_id(self.access_token, self.next_openid)
             if open:
                 logger.info(u'获取openid list成功')
@@ -66,7 +79,7 @@ class Task(object):
                     users = get_users(self.access_token, index)
                     if users:
                         logger.info('users=%s' % users)
-                        orm_models.User.object.add_user(
+                        orm_models.User.objects.add_user(
                             users.get('openid'),
                             users.get('subscribe'),
                             users.get('nickname'),
@@ -93,7 +106,7 @@ class Task(object):
         while True:
             try:
                 self.save_users()
-                sleep(expire)
+                sleep(600)
             except Exception as exc:
                 logger.error(u'发生异常')
                 continue

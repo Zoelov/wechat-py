@@ -11,6 +11,7 @@ from xml.etree import ElementTree as ET
 import time
 import hashlib
 import logging
+from orm import models as orm_models
 
 # Create your views here.
 
@@ -53,21 +54,35 @@ class WeChat(View):
         logger.info('接收到消息')
         logger.info('body=%s' % req.body)
         tree = ET.fromstring(req.body)
-        user_name = tree.find('ToUserName').text
-        from_user_name = tree.find('FromUserName').text
-        create_time = tree.find('CreateTime').text
-        msg_type = tree.find('MsgType').text
-        msg_id = tree.find('MsgId').text
-        if msg_type == 'text':
-            msg = tree.find('Content').text
-        if msg_type == 'image':
-            pic_url = tree.find('PicUrl').text
-            media_id = tree.find('MediaId').text
-        if msg_type == 'voice':
-            media_id = tree.find('MediaId').text
-            format = tree.find('Format').text
+        user_name = tree.find('ToUserName').text if tree.find('ToUserName') else None
+        from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') else None
+        create_time = tree.find('CreateTime').text if tree.find('CreateTime') else None
+        msg_type = tree.find('MsgType').text if tree.find('MsgType') else None
+        msg_id = tree.find('MsgId').text if tree.find('MsgId') else None
+        msg = tree.find('Content').text if tree.find('Content') else None
+        pic_url = tree.find('PicUrl').text if tree.find('PicUrl') else None
+        media_id = tree.find('MediaId').text if tree.find('MediaId') else None
+        format = tree.find('Format').text if tree.find('Format') else None
+        recognition = tree.find('Recognition').text if tree.find('Recognition') else None
+        thumb_media_id = tree.find('ThumbMediaId').text if tree.find('ThumbMediaId') else None
+        location_x = tree.find('Location_X').text if tree.find('Location_X') else None
+        location_y = tree.find('Location_Y').text if tree.find('Location_Y') else None
+        scale = tree.find('Scale').text if tree.find('Scale') else None
+        label = tree.find('Label').text if tree.find('Label') else None
+        title = tree.find('Title').text if tree.find('Title') else None
+        description = tree.find('Description').text if tree.find('Description') else None
+        url = tree.find('Url').text if tree.find('Url') else None
 
         logger.info(vars())
+
+        try:
+            # 保存收到的消息
+            orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg, msg_id, pic_url, media_id,
+                                                  format, recognition, thumb_media_id, location_x, location_y, scale,
+                                                  label, title, description, url)
+        except Exception as exc:
+            logger.error(u'保存收到的消息失败，error msg:%s' % exc.message, exc_info=True)
+
 
         try:
             result = self.replay_text(from_user_name, user_name, u'哈哈')

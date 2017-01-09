@@ -82,7 +82,7 @@ def get_access_token(app_id, app_secret):
 
     try:
         ret = RequestAPI.access_data(url, 'GET')
-        if ret.get('status') == 200:
+        if ret.get('status') == 200 and not ret.get('data').get('errcode'):
             logger.info(u'获取公众号token成功')
             return ret.get('data')
         else:
@@ -104,7 +104,7 @@ def get_open_id(access_token, next_openid):
     logger.info('url = %s' % url)
     try:
         ret = RequestAPI.access_data(url, 'GET')
-        if ret.get('status') == 200:
+        if ret.get('status') == 200 and not ret.get('data').get('errcode'):
             logger.info(u'获取openid成功')
             return ret.get('data')
         else:

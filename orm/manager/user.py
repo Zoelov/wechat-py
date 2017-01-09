@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 import logging
+import datetime
 
 
 logger = logging.getLogger(__name__)
@@ -32,33 +33,43 @@ class UsersManager(models.Manager):
             raise exc
 
 
-
-
-
-
-class OpenInfoManager(models.Manager):
-    def add_open_id(self, id, total, count, next_openid):
+class AccessManager(models.Manager):
+    def add_token(self, access_token, expires, create_time, end_time, is_valid=1):
         """
-        保存open id信息
-        :param id:
-        :param total:
-        :param count:
-        :param next_openid:
+        插入token信息
+        :param create_time:
+        :param access_token:
+        :param expires:
+        :param end_time:
+        :param is_valid:
         :return:
         """
-        logger.info('id = %s tota=%s count=%s next_openid=%s' %
-                    (id, total, count, next_openid))
         try:
-
             obj = self.model(
-                id=id,
-                total=total,
-                count=count,
-                next_openid=next_openid
+                access_token=access_token,
+                expires_time=expires,
+                create_time=create_time,
+                end_time=end_time,
+                is_valid=is_valid
             )
             obj.save()
         except Exception as exc:
-            logger.error(u'插入数据发生异常，error msg:%s' % exc.message, exc_info=True)
+            logger.error(u'保存token信息失败, error msg:%s' % exc.message, exc_info=True)
             raise exc
 
+    def set_invalid(self):
+        """
+        置invalid
+        :return:
+        """
+        try:
+            obj = self.filter(is_valid=1)
+            if obj.exists():
+                logger.info(u'查询到valid的token')
+                for index in obj:
+                    index.is_valid = 0
+                    index.save()
+        except Exception as exc:
+            logger.error(u'置invalid发生异常，error msg:%s' % exc.message, exc_info=True)
+            raise exc
 
