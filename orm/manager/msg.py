@@ -2,6 +2,7 @@
 from django.db import models
 import logging
 import time
+from utils import public
 
 
 logger = logging.getLogger(__name__)
@@ -38,6 +39,7 @@ class RecManager(models.Manager):
             time_arry = time.localtime(float(create_time))
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             obj = self.model(
+                id=public.create_uuid('msg'),
                 from_user_id=from_user,
                 msg_type=msg_type,
                 create_time=time_str,
