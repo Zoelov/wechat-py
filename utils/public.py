@@ -5,6 +5,7 @@ import datetime
 from django.conf import settings
 import logging
 import time
+from wechat.service.user import get_access_token
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,7 @@ def create_uuid(name=''):
     return str(uuid.uuid1())
 
 
-def get_access_token():
+def access_token():
     """
     获取access_token
     :return:

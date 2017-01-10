@@ -28,7 +28,7 @@ def subscribe_or_unbscribe(param):
 
         if msg_type == 'event' and event == 'subscribe':
             logger.info(u'新用户关注，open_id=%s' % from_user_name)
-            access_token = public.get_access_token()
+            access_token = public.access_token()
             if access_token:
                 user_info = get_users(access_token, from_user_name)
                 if user_info:
