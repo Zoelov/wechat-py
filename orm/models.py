@@ -152,7 +152,7 @@ class UserLocation(models.Model):
     """
     user = models.ForeignKey(User)
     create_time = models.DateTimeField('create_time', help_text=u'位置信息时间')
-    latiude = models.FloatField('latiude', max_length=10, help_text=u'维度')
+    latitude = models.FloatField('latiude', max_length=10, help_text=u'维度')
     longitude = models.FloatField('longitude', max_length=10, help_text=u'经度')
     precision = models.FloatField('precision', max_length=10, help_text=u'精度')
     models.FloatField()
