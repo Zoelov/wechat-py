@@ -48,11 +48,10 @@ class AccessManager(models.Manager):
         :return:
         """
         try:
-            time_str = time.strftime('%Y-%m-%d %H:%M:%S', create_time)
             obj = self.model(
                 access_token=access_token,
                 expires_time=expires,
-                create_time=time_str,
+                create_time=create_time.strftime('%Y-%m-%d %H:%M:%S'),
                 end_time=end_time,
                 is_valid=is_valid
             )

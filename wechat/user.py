@@ -55,6 +55,7 @@ class Task(object):
                 token = get_access_token(self.app_id, self.app_secret)
                 if token:
                     logger.info(u'获取access_token成功')
+                    logger.info('token = %s' % token)
                     self.access_token = token.get('access_token')
                     self.expires = token.get('expires_in')
 
