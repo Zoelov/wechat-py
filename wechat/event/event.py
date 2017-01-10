@@ -34,23 +34,23 @@ def subscribe_or_unbscribe(param):
                 if user_info:
                     user_obj = orm_models.User.objects.filter(id=from_user_name, subscribe=0)
                     if user_obj.exists():
-                        user_obj[0]['unsubscribe_time'] = None
-                        name = orm_models.User.objects.update_info(user_obj[0])
+                        user_info['unsubscribe_time'] = None
+                        name = orm_models.User.objects.update_info(user_info)
                     else:
                         name = orm_models.User.objects.add_user(
-                            user_obj[0].get('openid'),
-                            user_obj[0].get('subscribe'),
-                            user_obj[0].get('nickname'),
-                            user_obj[0].get('sex'),
-                            user_obj[0].get('city'),
-                            user_obj[0].get('country'),
-                            user_obj[0].get('province'),
-                            user_obj[0].get('language'),
-                            user_obj[0].get('headimgurl'),
-                            user_obj[0].get('subscribe_time'),
-                            user_obj[0].get('unionid'),
-                            user_obj[0].get('remark'),
-                            user_obj[0].get('groupid')
+                            user_info.get('openid'),
+                            user_info.get('subscribe'),
+                            user_info.get('nickname'),
+                            user_info.get('sex'),
+                            user_info.get('city'),
+                            user_info.get('country'),
+                            user_info.get('province'),
+                            user_info.get('language'),
+                            user_info.get('headimgurl'),
+                            user_info.get('subscribe_time'),
+                            user_info.get('unionid'),
+                            user_info.get('remark'),
+                            user_info.get('groupid')
                         )
                         logger.info(u'保存新用户信息成功')
                 else:
