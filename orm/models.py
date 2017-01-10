@@ -62,6 +62,8 @@ class User(models.Model):
     remark = models.CharField('remark', max_length=36, help_text=u'对关注者的备注')
     groupid = models.CharField('groupid', max_length=36)
 
+    unsubscribe_time = models.DateTimeField('unsubscribe_time', help_text=u'取消关注时间')
+
     objects = UsersManager()
 
     class Meta:

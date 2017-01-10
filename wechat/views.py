@@ -12,6 +12,7 @@ import time
 import hashlib
 import logging
 from orm import models as orm_models
+from wechat.event import event
 
 # Create your views here.
 
@@ -76,10 +77,14 @@ class WeChat(View):
         logger.info(vars())
 
         try:
-            # 保存收到的消息
-            orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg, msg_id, pic_url, media_id,
-                                                  format, recognition, thumb_media_id, location_x, location_y, scale,
-                                                  label, title, description, url)
+            if msg_type is 'event':
+                ret = event.process_event(req.body)
+                return HttpResponse(ret, content_type='application/xml')
+            else:
+                # 保存收到的消息
+                orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg, msg_id, pic_url, media_id,
+                                                      format, recognition, thumb_media_id, location_x, location_y, scale,
+                                                      label, title, description, url)
         except Exception as exc:
             logger.error(u'保存收到的消息失败，error msg:%s' % exc.message, exc_info=True)
 

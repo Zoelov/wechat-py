@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class UsersManager(models.Manager):
-    def add_user(self, open_id, subscribe, nickname, sex, city, country, province, language, headimgurl, subscribe_time, unionid, remark, groupid):
+    def add_user(self, open_id, subscribe, nickname, sex, city, country, province, language, headimgurl, subscribe_time, unionid, remark, groupid, unsubscribe_time=None):
         """
         """
         try:
@@ -28,11 +28,57 @@ class UsersManager(models.Manager):
                 subscribe_time=time_str,
                 unionid=unionid,
                 remark=remark,
-                groupid=groupid
+                groupid=groupid,
+                unsubscribe_time=unsubscribe_time
             )
             user.save()
+            return user.nickname
         except Exception as exc:
             logger.error(u'插入用户信息发生异常, error msg:%s' % exc.message, exc_info=True)
+            raise exc
+
+    def update_info(self, user_dict):
+        """
+        更新用户信息
+        :param user_dict:
+        :return:
+        """
+        try:
+            obj = self.filter(id=user_dict.get('openid'))
+            if obj.exists():
+                obj = obj[0]
+                if 'subscribe' in user_dict:
+                    obj.subscribe = user_dict.get('subscribe')
+                if 'nickname' in user_dict:
+                    obj.nickname = user_dict.get('nickname')
+                if 'sex' in user_dict:
+                    obj.sex = user_dict.get('sex')
+                if 'city' in user_dict:
+                    obj.city = user_dict.get('city')
+                if 'country' in user_dict:
+                    obj.country = user_dict.get('country')
+                if 'province' in user_dict:
+                    obj.province = user_dict.get('province')
+                if 'language' in user_dict:
+                    obj.language = user_dict.get('language')
+                if 'headimgurl' in user_dict:
+                    obj.headimgurl = user_dict.get('headimgurl')
+                if 'subscribe_time' in user_dict:
+                    time_arry = time.localtime(float(user_dict.get('subscribe_time')))
+                    time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
+                    obj.subscribe_time = time_str
+                if 'unionid' in user_dict:
+                    obj.unionid = user_dict.get('unionid')
+                if 'remark' in user_dict:
+                    obj.remark = user_dict.get('remark')
+                if 'groupid' in user_dict:
+                    obj.groupid = user_dict.get('groupid')
+                if 'unsubscribe_time' in user_dict:
+                    obj.unsubscribe_time = user_dict.get('unsubscribe_time')
+                obj.save()
+                return obj.nickname
+        except Exception as exc:
+            logger.error(u'更新用户信息发生异常，error msg:%s' % exc.message, exc_info=True)
             raise exc
 
 
