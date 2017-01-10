@@ -26,7 +26,7 @@ def subscribe_or_unbscribe(param):
         msg_type = tree.find('MsgType').text
         event = tree.find('Event').text
 
-        if msg_type is 'event' and event is 'subscribe':
+        if msg_type == 'event' and event == 'subscribe':
             logger.info(u'新用户关注，open_id=%s' % from_user_name)
             access_token = public.get_access_token()
             if access_token:
@@ -53,10 +53,13 @@ def subscribe_or_unbscribe(param):
                             user_obj[0].get('groupid')
                         )
                         logger.info(u'保存新用户信息成功')
+                else:
+                    logger.error(u'未查询到用户信息')
+                    return None
             ret = public.replay_text(from_user_name, to_user_name, '欢迎您的%s关注！' % name)
 
             return ret
-        elif msg_type is 'event' and event is 'unsubscribe':
+        elif msg_type == 'event' and event == 'unsubscribe':
             param = {
                 'openid': from_user_name,
                 'subscribe': 0,
@@ -79,5 +82,5 @@ def process_event(param):
     """
     tree = ET.fromstring(param)
     event = tree.find('Event').text
-    if event is 'subscribe' or 'unsubscribe':
+    if event == 'subscribe' or event == 'unsubscribe':
         return subscribe_or_unbscribe(param)

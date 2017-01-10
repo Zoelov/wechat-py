@@ -77,7 +77,7 @@ class WeChat(View):
         logger.info(vars())
 
         try:
-            if msg_type is 'event':
+            if msg_type == 'event':
                 ret = event.process_event(req.body)
                 return HttpResponse(ret, content_type='application/xml')
             else:
