@@ -56,7 +56,7 @@ def subscribe_or_unbscribe(param):
                 else:
                     logger.error(u'未查询到用户信息')
                     return None
-            ret = public.replay_text(from_user_name, to_user_name, u'欢迎您的%s关注！' % name)
+            ret = public.replay_text(from_user_name, to_user_name, u'欢迎%s的关注！' % name)
 
             return ret
         elif msg_type == 'event' and event == 'unsubscribe':
@@ -74,6 +74,33 @@ def subscribe_or_unbscribe(param):
         logger.error(u'订阅信息处理发生异常,error msg:%s' % exc.message, exc_info=True)
 
 
+def location_event(param):
+    """
+    地理位置事件处理
+    :param param:
+    :return:
+    """
+    logger.info('param = %s' % param)
+    try:
+        tree = ET.fromstring(param)
+        to_user_name = tree.find('ToUserName').text
+        from_user_name = tree.find('FromUserName').text
+        create_time = tree.find('CreateTime').text
+        msg_type = tree.find('MsgType').text
+        event = tree.find('Event').text
+        latitude = tree.find('Latitude').text
+        longitude = tree.find('Longitude').text
+        precision = tree.find('Precision').text
+
+        orm_models.UserLocation.objects.add_location(from_user_name, create_time, latitude, longitude, precision)
+        ret = public.replay_text(from_user_name, to_user_name, 'sucess')
+
+        return ret
+    except Exception as exc:
+        logger.error(u'处理地理位置信息发生异常，error msg:%s' % exc.message, exc_info=True)
+        raise exc
+
+
 def process_event(param):
     """
     事件处理
@@ -84,3 +111,6 @@ def process_event(param):
     event = tree.find('Event').text
     if event == 'subscribe' or event == 'unsubscribe':
         return subscribe_or_unbscribe(param)
+
+    if event == 'LOCATION':
+        return location_event(param)

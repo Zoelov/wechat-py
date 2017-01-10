@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
 from utils import public
-from orm.manager.user import  UsersManager, AccessManager
+from orm.manager.user import  UsersManager, AccessManager, LocationManager
 from orm.manager.msg import RepManager, RecManager
 
 # Create your models here.
@@ -48,6 +48,9 @@ MSG_TYPE = (
 
 
 class User(models.Model):
+    """
+    粉丝信息
+    """
     id = models.CharField('open id', primary_key=True, max_length=64, default=None)
     subscribe = models.BooleanField('subscribe', choices=IS_SUBSCRIBE, default=1)
     nickname = models.CharField('nickname', max_length=36)
@@ -71,6 +74,9 @@ class User(models.Model):
 
 
 class AccessToken(models.Model):
+    """
+    token信息
+    """
     # id = models.IntegerField(primary_key=True, help_text='token', db_column='id', auto_created=True)
     access_token = models.CharField('access token', max_length=512)
     create_time = models.DateTimeField('create_time', auto_now_add=True, help_text=u'创建时间')
@@ -85,6 +91,9 @@ class AccessToken(models.Model):
 
 
 class RecMessage(models.Model):
+    """
+    收到的用户信息
+    """
     id = models.CharField('msg id', max_length=36, primary_key=True, default=public.create_uuid('msg'))
     from_user = models.ForeignKey(User)
     msg_type = models.CharField('msg type', choices=MSG_TYPE, default=0, max_length=10, help_text=u'消息类型')
@@ -111,6 +120,9 @@ class RecMessage(models.Model):
 
 
 class ReplayMessage(models.Model):
+    """
+    回复给用户的信息
+    """
     id = models.CharField('msg id', max_length=36, primary_key=True, default=public.create_uuid('msg'))
     rec = models.ForeignKey(RecMessage)
     to_user = models.ForeignKey(User)
@@ -132,6 +144,24 @@ class ReplayMessage(models.Model):
 
     class Meta:
         db_table = 'wechat_replay_message'
+
+
+class UserLocation(models.Model):
+    """
+    用户地址位置信息
+    """
+    user = models.ForeignKey(User)
+    create_time = models.DateTimeField('create_time', help_text=u'位置信息时间')
+    latiude = models.FloatField('latiude', max_length=10, help_text=u'维度')
+    longitude = models.FloatField('longitude', max_length=10, help_text=u'经度')
+    precision = models.FloatField('precision', max_length=10, help_text=u'精度')
+    models.FloatField()
+
+    objects = LocationManager()
+
+    class Meta:
+        db_table = 'wechat_user_location'
+
 
 
 

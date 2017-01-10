@@ -122,3 +122,31 @@ class AccessManager(models.Manager):
             logger.error(u'置invalid发生异常，error msg:%s' % exc.message, exc_info=True)
             raise exc
 
+
+class LocationManager(models.Manager):
+    def add_location(self, from_user_name, create_time, latitude, longitude, precision):
+        """
+
+        :param from_user_name:
+        :param create_time:
+        :param latitude:
+        :param longitude:
+        :param precision:
+        :return:
+        """
+        try:
+            time_arry = time.localtime(float(create_time))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
+            obj = self.model(
+                user=from_user_name,
+                create_time=time_str,
+                latitude=latitude,
+                longitude=longitude,
+                precision=precision
+            )
+            obj.save()
+            logger.info(u'保存用户地理位置信息成功user=%s' % from_user_name)
+        except Exception as exc:
+            logger.error(u'保存用户地理位置信息发生异常，error msg:%s' % exc.message, exc_info=True)
+            raise exc
+
