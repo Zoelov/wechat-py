@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
+
 import uuid
 import datetime
-from orm import models as orm_models
 from django.conf import settings
 import logging
 import time
@@ -23,6 +23,7 @@ def get_access_token():
     获取access_token
     :return:
     """
+    from orm import models as orm_models
     try:
         now = datetime.datetime.now
         access = orm_models.AccessToken.objects.filter(is_valid=1, end_time__gt=now)
