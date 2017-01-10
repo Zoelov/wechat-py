@@ -93,7 +93,7 @@ def location_event(param):
         precision = tree.find('Precision').text
 
         orm_models.UserLocation.objects.add_location(from_user_name, create_time, latitude, longitude, precision)
-        ret = public.replay_text(from_user_name, to_user_name, 'sucess')
+        ret = public.replay_text(from_user_name, to_user_name, '')
 
         return ret
     except Exception as exc:
