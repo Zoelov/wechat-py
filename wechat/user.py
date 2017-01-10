@@ -106,7 +106,7 @@ class Task(object):
         while True:
             try:
                 self.save_users()
-                sleep(600)
+                sleep(3600)
             except Exception as exc:
                 logger.error(u'发生异常')
                 continue
