@@ -48,8 +48,7 @@ class AccessManager(models.Manager):
         :return:
         """
         try:
-            time_arry = time.localtime(float(create_time))
-            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', create_time)
             obj = self.model(
                 access_token=access_token,
                 expires_time=expires,

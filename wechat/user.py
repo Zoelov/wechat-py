@@ -109,6 +109,7 @@ class Task(object):
                 sleep(3600)
             except Exception as exc:
                 logger.error(u'发生异常')
+                sleep(3600)
                 continue
 
 if __name__ == '__main__':

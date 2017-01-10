@@ -120,6 +120,7 @@ def get_users(access_token, open_id, lang='zh_CN'):
     获取用户信息
     """
     url = settings.ACCESS_USER_URL + 'access_token=%s&openid=%s&lang=%s' % (access_token, open_id, lang)
+    logger.info(url)
 
     try:
         ret = RequestAPI.access_data(url, 'GET')
