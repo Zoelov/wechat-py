@@ -67,6 +67,7 @@ class Task(object):
             open = get_open_id(self.access_token, self.next_openid)
             if open:
                 logger.info(u'获取openid list成功')
+                logger.info('open id = %s' % open)
                 self.total = open.get('total')
                 self.count = open.get('count')
                 self.next_openid = open.get('next_openid')
