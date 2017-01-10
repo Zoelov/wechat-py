@@ -69,7 +69,7 @@ class User(models.Model):
 
 
 class AccessToken(models.Model):
-    id = models.IntegerField(primary_key=True, help_text='token', db_column='id', auto_created=True)
+    # id = models.IntegerField(primary_key=True, help_text='token', db_column='id', auto_created=True)
     access_token = models.CharField('access token', max_length=512)
     create_time = models.DateTimeField('create_time', auto_now_add=True, help_text=u'创建时间')
     expires_time = models.IntegerField(help_text=u'过期时间，单位为秒')
