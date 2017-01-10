@@ -124,7 +124,7 @@ def get_users(access_token, open_id, lang='zh_CN'):
 
     try:
         ret = RequestAPI.access_data(url, 'GET')
-        if ret.get('status') == 200:
+        if ret.get('status') == 200 and not ret.get('data').get('errcode'):
             logger.info(u'获取用户信息成功')
             return ret.get('data')
         else:

@@ -78,8 +78,8 @@ class Task(object):
                         logger.info(u'此open_id已经存在，open_id=%s' % index)
                         continue
                     users = get_users(self.access_token, index)
+                    logger.info('users = %s' % users)
                     if users:
-                        logger.info('users=%s' % users)
                         orm_models.User.objects.add_user(
                             users.get('openid'),
                             users.get('subscribe'),
