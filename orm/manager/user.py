@@ -16,7 +16,7 @@ class UsersManager(models.Manager):
             time_arry = time.localtime(float(subscribe_time))
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             user = self.model(
-                open_id=open_id,
+                id=open_id,
                 subscribe=subscribe,
                 nickname=nickname,
                 sex=sex,
