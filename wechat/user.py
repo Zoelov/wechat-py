@@ -72,7 +72,7 @@ class Task(object):
                 self.count = open.get('count')
                 self.next_openid = open.get('next_openid')
 
-                open_id_list = open.get('data').get('open_id_list')
+                open_id_list = open.get('data').get('openid')
                 for index in open_id_list:
                     user_obj = orm_models.User.objects.filter(open_id=index)
                     if user_obj.exists():
