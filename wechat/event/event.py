@@ -56,7 +56,7 @@ def subscribe_or_unbscribe(param):
                 else:
                     logger.error(u'未查询到用户信息')
                     return None
-            ret = public.replay_text(from_user_name, to_user_name, '欢迎您的%s关注！' % name)
+            ret = public.replay_text(from_user_name, to_user_name, u'欢迎您的%s关注！' % name)
 
             return ret
         elif msg_type == 'event' and event == 'unsubscribe':
@@ -66,7 +66,7 @@ def subscribe_or_unbscribe(param):
                 'unsubscribe_time': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             orm_models.User.objects.update_info(param)
-            ret = public.replay_text(from_user_name, to_user_name, '别取关啊。。。')
+            ret = public.replay_text(from_user_name, to_user_name, '')
             return ret
         else:
             return None
