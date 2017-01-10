@@ -74,7 +74,7 @@ class Task(object):
 
                 open_id_list = open.get('data').get('openid')
                 for index in open_id_list:
-                    user_obj = orm_models.User.objects.filter(open_id=index)
+                    user_obj = orm_models.User.objects.filter(pk=index)
                     if user_obj.exists():
                         logger.info(u'此open_id已经存在，open_id=%s' % index)
                         continue
