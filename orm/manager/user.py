@@ -138,7 +138,7 @@ class LocationManager(models.Manager):
             time_arry = time.localtime(float(create_time))
             time_str = time.strftime('%Y-%m-%d %H:%M:%S', time_arry)
             obj = self.model(
-                user=from_user_name,
+                user_id=from_user_name,
                 create_time=time_str,
                 latitude=latitude,
                 longitude=longitude,
