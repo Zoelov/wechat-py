@@ -19,6 +19,8 @@ EOF
 service httpd start
 #cd /data/wechat/wechat/
 #nohup python user.py &
+cd /data/wechat/menu/
+nohup python manage.py &
 
 chmod -R 777 /data/wechat/logs/
 

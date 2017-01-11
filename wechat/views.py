@@ -13,6 +13,7 @@ import hashlib
 import logging
 from orm import models as orm_models
 from wechat.event import event
+from utils import public
 
 # Create your views here.
 
@@ -90,33 +91,11 @@ class WeChat(View):
 
 
         try:
-            result = self.replay_text(from_user_name, user_name, u'哈哈')
+            result = public.replay_text(from_user_name, user_name, u'哈哈')
             logger.info('replay is:%s' % result)
             return HttpResponse(result, content_type='application/xml')
         except Exception as exc:
             logger.error(u'发生异常，error msg:%s' % exc.message, exc_info=True)
             return HttpResponse('', content_type='application/xml')
-
-    def replay_text(self, to_user_name, from_user_name, msg, msg_type='text'):
-        """
-        回复文本消息
-        :param to_user_name:
-        :param from_user_name:
-        :param msg:
-        :param msg_type:
-        :return:
-        """
-        now = time.time()
-        replay = """
-            <xml>
-                <ToUserName><![CDATA[%s]]></ToUserName>
-                <FromUserName><![CDATA[%s]]></FromUserName>
-                <CreateTime>%s</CreateTime>
-                <MsgType><![CDATA[%s]]></MsgType>
-                <Content><![CDATA[%s]]></Content>
-            </xml>
-        """ % (to_user_name, from_user_name, str(int(now)), msg_type, msg)
-
-        return replay
 
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'wechat',
     'orm',
     'utils',
+    'menu',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -99,7 +100,8 @@ except Exception as exc:
 ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
 ACCESS_OPEN_ID = 'https://api.weixin.qq.com/cgi-bin/user/get?'
 ACCESS_USER_URL = 'https://api.weixin.qq.com/cgi-bin/user/info?'
-
+CREATE_MENU_URL = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='
+DELETE_MENU_URL = 'https://api.weixin.qq.com/cgi-bin/menu/delete?access_token='
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

@@ -1,73 +1,10 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
 import logging
-import httplib2 as http
-import json
-try:
-    from urlparse import urlparse
-except ImportError:
-    from urllib.parse import urlparse
+from utils.public import RequestAPI
+
 
 logger = logging.getLogger(__name__)
-
-
-class RequestAPI():
-    STATUS_CODE = {
-        '200': '成功',
-        '201': '成功',
-        '404': '资源不存在',
-        '409': '资源冲突，存在关键资源',
-        '500': '服务不可用'
-    }
-
-    @classmethod
-    def access_data(cls, url, method, body='', token=''):
-        if url == '':
-            return {'status': '2001', 'msg': 'path is empty!'}
-        if method.upper() not in ('GET', 'POST', 'DELETE', 'PUT'):
-            return {'status': '2002', 'msg': 'method is invalid!'}
-
-        headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8'
-        }
-        if token:
-            headers['Access-Token'] = token
-
-        target = urlparse(url)
-
-        # print(target.geturl())
-        logger.info(u'调用API url: %s', target.geturl())
-
-        h = http.Http()
-
-        if not isinstance(body, str):
-            body = json.dumps(body)
-        body = '' if method in ['GET'] else body
-        logger.info('调用底层参数: %s', body)
-        try:
-            response, content = h.request(target.geturl(), method, body, headers)
-        except Exception as exc:
-            logger.error('请求底层失败，error msg:%s' % exc.message, exc_info=True)
-            response, content = h.request(target.geturl(), method, body, headers)
-        logger.info('底层返回状态: %s, 结果: %s', str(response.status), content)
-        # if method in ['POST', 'PUT']:
-        #     response = requests.request(method, target.geturl(), json=body, headers=headers)
-        # else:
-        #     response = requests.request(method, target.geturl(), headers=headers)
-        rtn_status = response.status
-
-        try:
-            try:
-                data = json.loads(content)
-            except Exception as exc:
-                logger.error('json转化底层数据失败, raise Exception: %r' % exc)
-                data = eval(content)
-        except Exception as exc:
-            logger.error('json转化底层数据失败, raise Exception: %r' % exc)
-            data = content
-        logger.info('返回结果: %s', data)
-        return {'status': rtn_status, 'data': data, 'msg': cls.STATUS_CODE.get(rtn_status, '')}
 
 
 def get_access_token(app_id, app_secret):
