@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
 import logging
-from utils.public import RequestAPI
-
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +12,7 @@ def get_access_token(app_id, app_secret):
     :param app_secret:
     :return:
     """
+    from utils.public import RequestAPI
     url = settings.ACCESS_TOKEN_URL + '&appid=%s&secret=%s' % (app_id, app_secret)
     logger.info('url=%s' % url)
 
@@ -34,6 +33,7 @@ def get_open_id(access_token, next_openid):
     """
     获取openid
     """
+    from utils.public import RequestAPI
     if next_openid is None:
         url = settings.ACCESS_OPEN_ID + 'access_token=%s&next_openid=' % access_token
     else:
@@ -56,6 +56,7 @@ def get_users(access_token, open_id, lang='zh_CN'):
     """
     获取用户信息
     """
+    from utils.public import RequestAPI
     url = settings.ACCESS_USER_URL + 'access_token=%s&openid=%s&lang=%s' % (access_token, open_id, lang)
     logger.info(url)
 

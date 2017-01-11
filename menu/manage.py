@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
+
 import sys
 import os
-import datetime
 from os.path import dirname, abspath
 
 reload(sys)
@@ -9,6 +9,7 @@ sys.setdefaultencoding('utf-8')
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, PROJECT_DIR)
 import django
+import json
 
 '''
 Django 版本大于等于1.7的时候，需要加上下面两句
@@ -40,51 +41,51 @@ def create_menu(access_token):
     param = {
         'button': [
             {
-                'name': '人脸检测',
+                'name': u'人脸检测',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统拍照',
+                        'name': 'sysphoto',
                         'key': 'pic_sysphoto',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '拍照或者从相册',
+                        'name': 'album',
                         'key': 'pic_photo_or_album',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': '人脸识别',
+                'name': 'FaceRecognition',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统拍照',
+                        'name': 'sysphoto',
                         'key': 'pic_sysphoto',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '拍照或者从相册',
+                        'name': 'album',
                         'key': 'pic_photo_or_album',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': '证件识别',
+                'name': 'IdRec',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统拍照',
+                        'name': 'sysphoto',
                         'key': 'pic_sysphoto',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '拍照或者从相册',
+                        'name': 'album',
                         'key': 'pic_photo_or_album',
                         'sub_button': []
                     }
@@ -100,7 +101,8 @@ def create_menu(access_token):
             logger.info(u'创建菜单成功')
             return True
         else:
-            logger.error(u'创建菜单失败，errorcode:%s errmsg:%s' % (ret.get('data').get('errcode'), ret.get('data').get('errmsg')))
+            logger.error(
+                u'创建菜单失败，errorcode:%s errmsg:%s' % (ret.get('data').get('errcode'), ret.get('data').get('errmsg')))
             return False
     except Exception as exc:
         logger.error(u'创建菜单发生异常,error msg:%s' % exc.message, exc_info=True)
@@ -122,7 +124,8 @@ def delete_menu(access_token):
             logger.info(u'删除菜单成功')
             return True
         else:
-            logger.error(u'删除菜单失败，errorcode:%s errmsg:%s' % (ret.get('data').get('errcode'), ret.get('data').get('errmsg')))
+            logger.error(
+                u'删除菜单失败，errorcode:%s errmsg:%s' % (ret.get('data').get('errcode'), ret.get('data').get('errmsg')))
             return False
     except Exception as exc:
         logger.error(u'删除菜单发生异常,error msg:%s' % exc.message, exc_info=True)
@@ -135,10 +138,8 @@ if __name__ == '__main__':
         token = access_token()
         delete_menu(token)
 
-        create_menu(token)
+        ret = create_menu(token)
+        if ret:
+            logger.info(u'创建菜单成功')
     except Exception as exc:
         logger.error(u'error msg:%s' % exc.message)
-
-
-
-

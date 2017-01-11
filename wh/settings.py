@@ -155,14 +155,21 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'menu': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_PATH, 'wechat.log'),
+            'maxBytes': 1024 * 1024 * 100,  # 100 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        }
     },
     'loggers': {
-        'wechat': {
-            'handlers': ['wechat', 'console'],
-            'level': 'INFO',
+        '': {
+            'handlers': ['console', 'default', 'wechat'],
+            'level': 'DEBUG',
             'propagate': False
-        },
-
+        }
     }
 }
 

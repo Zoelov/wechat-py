@@ -91,7 +91,7 @@ def access_token():
     """
     from orm import models as orm_models
     try:
-        now = datetime.datetime.now
+        now = datetime.datetime.now()
         access = orm_models.AccessToken.objects.filter(is_valid=1, end_time__gt=now)
         if access.exists():
             return access[0].access_token
