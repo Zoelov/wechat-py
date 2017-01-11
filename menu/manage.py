@@ -1,4 +1,27 @@
 # -*- coding:utf-8 -*-
+import sys
+import os
+import datetime
+from os.path import dirname, abspath
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
+PROJECT_DIR = dirname(dirname(abspath(__file__)))
+sys.path.insert(0, PROJECT_DIR)
+import django
+
+'''
+Django 版本大于等于1.7的时候，需要加上下面两句
+import django
+django.setup()
+否则会抛出错误 django.core.exceptions.AppRegistryNotReady: Models aren't loaded yet.
+'''
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wh.settings")
+
+if django.VERSION >= (1, 7):  # 自动判断版本
+    django.setup()
+
 from django.conf import settings
 from utils.public import RequestAPI, access_token
 import logging
