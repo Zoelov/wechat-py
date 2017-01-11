@@ -41,7 +41,7 @@ def create_menu(access_token):
     param = {
         'button': [
             {
-                'name': u'人脸检测',
+                'name': u'FD',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
@@ -58,7 +58,7 @@ def create_menu(access_token):
                 ]
             },
             {
-                'name': 'FaceRecognition',
+                'name': 'FR',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
@@ -75,7 +75,7 @@ def create_menu(access_token):
                 ]
             },
             {
-                'name': 'IdRec',
+                'name': 'IR',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
