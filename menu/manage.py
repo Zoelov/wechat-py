@@ -41,52 +41,52 @@ def create_menu(access_token):
     param = {
         'button': [
             {
-                'name': u"人脸检测".encode('utf-8'),
+                'name': u"人脸检测",
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': 'sysphoto',
-                        'key': 'pic_sysphoto',
+                        'name': '系统相机',
+                        'key': 'FD',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': 'album',
-                        'key': 'pic_photo_or_album',
+                        'name': '相册',
+                        'key': 'FD',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': 'FR',
+                'name': '人脸识别',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': 'sysphoto',
-                        'key': 'pic_sysphoto',
+                        'name': '系统相机',
+                        'key': 'FR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': 'album',
-                        'key': 'pic_photo_or_album',
+                        'name': '相册',
+                        'key': 'FR',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': 'IR',
+                'name': '证件识别',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': 'sysphoto',
-                        'key': 'pic_sysphoto',
+                        'name': '系统相机',
+                        'key': 'IR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': 'album',
-                        'key': 'pic_photo_or_album',
+                        'name': '相册',
+                        'key': 'IR',
                         'sub_button': []
                     }
                 ]
