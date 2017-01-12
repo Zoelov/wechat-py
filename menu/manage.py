@@ -45,47 +45,47 @@ def create_menu(access_token):
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统相机',
+                        'name': u'系统相机',
                         'key': 'FD',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '相册',
+                        'name': u'相册',
                         'key': 'FD',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': '人脸识别',
+                'name': u'人脸识别',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统相机',
+                        'name': u'系统相机',
                         'key': 'FR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '相册',
+                        'name': u'相册',
                         'key': 'FR',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': '证件识别',
+                'name': u'证件识别',
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': '系统相机',
+                        'name': u'系统相机',
                         'key': 'IR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': '相册',
+                        'name': u'相册',
                         'key': 'IR',
                         'sub_button': []
                     }
