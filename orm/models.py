@@ -3,6 +3,7 @@ from django.db import models
 from utils import public
 from orm.manager.user import  UsersManager, AccessManager, LocationManager
 from orm.manager.msg import RepManager, RecManager
+from orm.manager.menu import MenuManager
 
 # Create your models here.
 
@@ -22,6 +23,10 @@ SEX = (
 IS_VALID = (
     ('0', u'无效',),
     ('1', u'有效',),
+)
+IS_REPLY = (
+    ('0', u'没有回复',),
+    ('1', u'已经回复',),
 )
 
 MSG_TYPE = (
@@ -112,6 +117,7 @@ class RecMessage(models.Model):
     title = models.CharField('title', max_length=100, null=True, blank=True, help_text=u'消息标题')
     description = models.CharField('description', max_length=100, null=True, blank=True, help_text=u'消息描述')
     url = models.CharField('url', max_length=200, null=True, blank=True, help_text=u'消息链接')
+    is_reply = models.BooleanField('is replay', choices=IS_REPLY, default=0, help_text=u'是否回复')
 
     objects = RecManager()
 
@@ -155,12 +161,31 @@ class UserLocation(models.Model):
     latitude = models.FloatField('latiude', max_length=10, help_text=u'维度')
     longitude = models.FloatField('longitude', max_length=10, help_text=u'经度')
     precision = models.FloatField('precision', max_length=10, help_text=u'精度')
-    models.FloatField()
 
     objects = LocationManager()
 
     class Meta:
         db_table = 'wechat_user_location'
+
+
+class MenuEvent(models.Model):
+    """
+    菜单事件
+    """
+    user = models.ForeignKey(User)
+    create_time = models.DateTimeField('create_time', help_text=u'创建时间')
+    event_type = models.CharField('event_type', max_length=36, help_text=u'事件类型')
+    event_key = models.CharField('event key', max_length=36, help_text=u'事件key值')
+    pic_count = models.IntegerField('pic count', blank=True, null=True, help_text=u'图片数量')
+    is_valid = models.BooleanField('is valid', choices=IS_VALID, default=1, help_text=u'菜单事件是否处理')
+
+    objects = MenuManager()
+
+    class Meta:
+        db_table = 'wechat_menu_event'
+
+
+
 
 
 

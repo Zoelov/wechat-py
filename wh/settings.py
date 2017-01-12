@@ -115,6 +115,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+MENU_JSON = {
+    ''
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -168,7 +172,7 @@ LOGGING = {
         '': {
             'handlers': ['console', 'default', 'wechat'],
             'level': 'DEBUG',
-            'propagate': False
+            'propagate': True
         }
     }
 }

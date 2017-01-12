@@ -101,6 +101,39 @@ def location_event(param):
         raise exc
 
 
+def menu_event(param):
+    """
+    菜单事件处理
+    :param param:
+    :return:
+    """
+    logger.info('param = %s' % param)
+    try:
+        tree = ET.fromstring(param)
+        to_user_name = tree.find('ToUserName').text
+        from_user_name = tree.find('FromUserName').text
+        create_time = tree.find('CreateTime').text
+        msg_type = tree.find('MsgType').text
+        event = tree.find('Event').text
+        key = tree.find('EventKey').text
+        count = tree.find('Count').text if tree.find('Count') is not None else None
+
+        menu_obj = orm_models.MenuEvent.objects.add_event(from_user_name, create_time, event, key, count)
+
+        # 查询消息记录，找到图片并进行处理
+        obj = orm_models.RecMessage.objects.filter(from_user_id=from_user_name, create_time=menu_obj.create_time, is_reply=0)
+        if obj.exists():
+            for index in obj:
+                pass
+
+
+
+
+    except Exception as exc:
+        logger.error(u'处理菜单事件发生异常,error msg:%s' % exc.message, exc_info=True)
+        raise exc
+
+
 def process_event(param):
     """
     事件处理
