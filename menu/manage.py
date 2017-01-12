@@ -41,7 +41,7 @@ def create_menu(access_token):
     param = {
         'button': [
             {
-                'name': u'FD',
+                'name': u"人脸检测".encode('utf-8'),
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
