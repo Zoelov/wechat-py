@@ -96,7 +96,7 @@ def create_menu(access_token):
 
     logger.info('param = %s' % param)
     try:
-        ret = RequestAPI.access_data(url, 'POST', param)
+        ret = RequestAPI.access_data(url, 'POST', json.dumps(param, ensure_ascii=False))
         if ret.get('status') == 200 and ret.get('data').get('errcode') == 0:
             logger.info(u'创建菜单成功')
             return True
