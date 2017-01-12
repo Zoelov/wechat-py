@@ -41,51 +41,51 @@ def create_menu(access_token):
     param = {
         'button': [
             {
-                'name': u"人脸检测",
+                'name': u"人脸检测".encode('utf-8'),
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': u'系统相机',
+                        'name': u'系统相机'.encode('utf-8'),
                         'key': 'FD',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': u'相册',
+                        'name': u'相册'.encode('utf-8'),
                         'key': 'FD',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': u'人脸识别',
+                'name': u'人脸识别'.encode('utf-8'),
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': u'系统相机',
+                        'name': u'系统相机'.encode('utf-8'),
                         'key': 'FR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': u'相册',
+                        'name': u'相册'.encode('utf-8'),
                         'key': 'FR',
                         'sub_button': []
                     }
                 ]
             },
             {
-                'name': u'证件识别',
+                'name': u'证件识别'.encode('utf-8'),
                 'sub_button': [
                     {
                         'type': 'pic_sysphoto',
-                        'name': u'系统相机',
+                        'name': u'系统相机'.encode('utf-8'),
                         'key': 'IR',
                         'sub_button': []
                     },
                     {
                         'type': 'pic_photo_or_album',
-                        'name': u'相册',
+                        'name': u'相册'.encode('utf-8'),
                         'key': 'IR',
                         'sub_button': []
                     }
