@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def text(param):
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -17,7 +18,6 @@ def text(param):
     msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
     msg_id = tree.find('MsgId').text if tree.find('MsgId') is not None else None
     msg = tree.find('Content').text if tree.find('Content') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, msg)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
@@ -34,6 +34,7 @@ def image(param):
     :param param:
     :return:
     """
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -42,7 +43,6 @@ def image(param):
     msg_id = tree.find('MsgId').text if tree.find('MsgId') is not None else None
     pic_url = tree.find('PicUrl').text if tree.find('PicUrl') is not None else None
     media_id = tree.find('MediaId').text if tree.find('MediaId') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, pic_url, media_id)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
@@ -59,6 +59,7 @@ def voice(param):
     :param param:
     :return:
     """
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -68,7 +69,6 @@ def voice(param):
     media_id = tree.find('MediaId').text if tree.find('MediaId') is not None else None
     format = tree.find('Format').text if tree.find('Format') is not None else None
     recognition = tree.find('Recognition').text if tree.find('Recognition') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, media_id, format, recognition)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
@@ -85,6 +85,7 @@ def video(param):
     :param param:
     :return:
     """
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -93,7 +94,6 @@ def video(param):
     msg_id = tree.find('MsgId').text if tree.find('MsgId') is not None else None
     media_id = tree.find('MediaId').text if tree.find('MediaId') is not None else None
     thumb_media_id = tree.find('ThumbMediaId').text if tree.find('ThumbMediaId') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, media_id
                                                     , None, None, thumb_media_id)
@@ -111,6 +111,7 @@ def location(param):
     :param param:
     :return:
     """
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -121,7 +122,6 @@ def location(param):
     location_y = tree.find('Location_Y').text if tree.find('Location_Y') is not None else None
     scale = tree.find('Scale').text if tree.find('Scale') is not None else None
     label = tree.find('Label').text if tree.find('Label') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, None
                                                     , None, None, None, location_x, location_y, scale, label)
@@ -139,6 +139,7 @@ def link(param):
     :param param:
     :return:
     """
+    logger.info(param)
     tree = ET.fromstring(param)
     user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
     from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
@@ -148,7 +149,6 @@ def link(param):
     title = tree.find('Title').text if tree.find('Title') is not None else None
     description = tree.find('Description').text if tree.find('Description') is not None else None
     url = tree.find('Url').text if tree.find('Url') is not None else None
-    logger.info(vars())
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, None
                                                     , None, None, None, None, None, None, None, title, description, url)
