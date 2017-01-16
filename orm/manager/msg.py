@@ -75,6 +75,7 @@ class RecManager(models.Manager):
         """
         try:
             obj.is_reply = is_reply
+            obj.save()
         except Exception as exc:
             logger.error(u'更新消息状态发生异常，error msg:%s' % exc.message, exc_info=True)
             raise exc
