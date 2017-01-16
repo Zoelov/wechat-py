@@ -84,10 +84,3 @@ class WeChat(View):
         except Exception as exc:
             logger.error(u'保存收到的消息失败，error msg:%s' % exc.message, exc_info=True)
 
-        try:
-            result = public.replay_text(from_user_name, user_name, u'哈哈')
-            logger.info('replay is:%s' % result)
-            return HttpResponse(result, content_type='application/xml')
-        except Exception as exc:
-            logger.error(u'发生异常，error msg:%s' % exc.message, exc_info=True)
-            return HttpResponse('', content_type='application/xml')

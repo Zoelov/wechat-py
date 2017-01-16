@@ -120,12 +120,14 @@ def menu_event(param):
         count = tree.find('Count').text if tree.find('Count') is not None else None
 
         menu_obj = orm_models.MenuEvent.objects.add_event(from_user_name, create_time, event, key, count)
+        ret = public.replay_text(from_user_name, to_user_name, u'图片')
+        return ret
 
         # 查询消息记录，找到图片并进行处理
-        obj = orm_models.RecMessage.objects.filter(from_user_id=from_user_name, create_time=menu_obj.create_time, is_reply=0)
-        if obj.exists():
-            for index in obj:
-                pass
+        # obj = orm_models.RecMessage.objects.filter(from_user_id=from_user_name, create_time=menu_obj.create_time, is_reply=0)
+        # if obj.exists():
+        #     for index in obj:
+        #         pass
 
     except Exception as exc:
         logger.error(u'处理菜单事件发生异常,error msg:%s' % exc.message, exc_info=True)
@@ -147,4 +149,6 @@ def process_event(param):
     if event == 'LOCATION':
         ret = location_event(param)
 
+    if event in ('pic_photo_or_album', 'pic_sysphoto'):
+        ret = menu_event(param)
     return HttpResponse(ret, content_type='application/xml')
