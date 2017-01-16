@@ -21,7 +21,7 @@ def text(param):
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, msg)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -46,7 +46,7 @@ def image(param):
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, pic_url, media_id)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -72,7 +72,7 @@ def voice(param):
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, media_id, format, recognition)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -98,7 +98,7 @@ def video(param):
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, media_id
                                                     , None, None, thumb_media_id)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -126,7 +126,7 @@ def location(param):
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, None
                                                     , None, None, None, location_x, location_y, scale, label)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -153,7 +153,7 @@ def link(param):
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, None, None, None
                                                     , None, None, None, None, None, None, None, title, description, url)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update(obj, 1)
+        orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)

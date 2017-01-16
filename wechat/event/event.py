@@ -127,8 +127,6 @@ def menu_event(param):
             for index in obj:
                 pass
 
-
-
     except Exception as exc:
         logger.error(u'处理菜单事件发生异常,error msg:%s' % exc.message, exc_info=True)
         raise exc
