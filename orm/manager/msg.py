@@ -4,18 +4,18 @@ import logging
 import time
 from utils import public
 
-
 logger = logging.getLogger(__name__)
 
 
 class RecManager(models.Manager):
     def add_msg(self, from_user, msg_type,
-                create_time, msg_content, msg_id, pic_url=None, media_id=None,
+                create_time, msg_id, msg_content=None, pic_url=None, media_id=None,
                 format=None, recognition=None, thumb_media_id=None, location_x=None, location_y=None,
-                scale=None, label=None, title=None, description=None, url=None
+                scale=None, label=None, title=None, description=None, url=None, is_reply=0
                 ):
         """
         插入收到的消息
+        :param is_reply:
         :param from_user:
         :param msg_type:
         :param create_time:
@@ -56,12 +56,27 @@ class RecManager(models.Manager):
                 label=label,
                 title=title,
                 description=description,
-                url=url
+                url=url,
+                is_reply=is_reply
             )
             obj.save()
             logger.info(u'保存收到的消息成功')
+            return obj
         except Exception as exc:
             logger.error(u'保存信息发生异常，error msg:%s' % exc.message, exc_info=True)
+            raise exc
+
+    def update_status(self, obj, is_reply):
+        """
+        更新消息回复状态
+        :param obj:
+        :param is_reply:
+        :return:
+        """
+        try:
+            obj.is_reply = is_reply
+        except Exception as exc:
+            logger.error(u'更新消息状态发生异常，error msg:%s' % exc.message, exc_info=True)
             raise exc
 
 

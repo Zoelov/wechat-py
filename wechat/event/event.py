@@ -7,6 +7,7 @@ from orm import models as orm_models
 from django.conf import settings
 from utils import public
 import datetime
+from django.http import HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +129,6 @@ def menu_event(param):
 
 
 
-
     except Exception as exc:
         logger.error(u'处理菜单事件发生异常,error msg:%s' % exc.message, exc_info=True)
         raise exc
@@ -142,8 +142,11 @@ def process_event(param):
     """
     tree = ET.fromstring(param)
     event = tree.find('Event').text
+    ret = ''
     if event == 'subscribe' or event == 'unsubscribe':
-        return subscribe_or_unbscribe(param)
+        ret = subscribe_or_unbscribe(param)
 
     if event == 'LOCATION':
-        return location_event(param)
+        ret = location_event(param)
+
+    return HttpResponse(ret, content_type='application/xml')

@@ -1,19 +1,18 @@
 # -*- coding:utf-8 -*-
 
-from django.shortcuts import render
-from django.views.generic.base import View
-from django.http import HttpResponse
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.template import loader, Context
-from xml.dom.minidom import Document
-from xml.etree import ElementTree as ET
-import time
 import hashlib
 import logging
-from orm import models as orm_models
-from wechat.event import event
+from multiprocessing import Process
+from xml.etree import ElementTree as ET
+
+from django.conf import settings
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import View
+
 from utils import public
+from wechat.event import event
+from wechat.msg import msg
 
 # Create your views here.
 
@@ -28,6 +27,24 @@ def health(req):
     """
     logger.info('health test')
     return HttpResponse('ok')
+
+
+def work(param):
+    """
+
+    :param param:
+    :return:
+    """
+    tree = ET.fromstring(param)
+    msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
+    if msg_type == 'event':
+        p1 = Process(target=event.process_event, args=(param,))
+        p1.start()
+        p1.join()
+    else:
+        p2 = Process(target=msg.process_msg, args=(param,))
+        p2.start()
+        p2.join()
 
 
 class WeChat(View):
@@ -58,37 +75,14 @@ class WeChat(View):
         tree = ET.fromstring(req.body)
         user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
         from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
-        create_time = tree.find('CreateTime').text if tree.find('CreateTime') is not None else None
         msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
-        msg_id = tree.find('MsgId').text if tree.find('MsgId') is not None else None
-        msg = tree.find('Content').text if tree.find('Content') is not None else None
-        pic_url = tree.find('PicUrl').text if tree.find('PicUrl') is not None else None
-        media_id = tree.find('MediaId').text if tree.find('MediaId') is not None else None
-        format = tree.find('Format').text if tree.find('Format') is not None else None
-        recognition = tree.find('Recognition').text if tree.find('Recognition') is not None else None
-        thumb_media_id = tree.find('ThumbMediaId').text if tree.find('ThumbMediaId') is not None else None
-        location_x = tree.find('Location_X').text if tree.find('Location_X') is not None else None
-        location_y = tree.find('Location_Y').text if tree.find('Location_Y') is not None else None
-        scale = tree.find('Scale').text if tree.find('Scale') is not None else None
-        label = tree.find('Label').text if tree.find('Label') is not None else None
-        title = tree.find('Title').text if tree.find('Title') is not None else None
-        description = tree.find('Description').text if tree.find('Description') is not None else None
-        url = tree.find('Url').text if tree.find('Url') is not None else None
 
         logger.info(vars())
 
         try:
-            if msg_type == 'event':
-                ret = event.process_event(req.body)
-                return HttpResponse(ret, content_type='application/xml')
-            else:
-                # 保存收到的消息
-                orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg, msg_id, pic_url, media_id,
-                                                      format, recognition, thumb_media_id, location_x, location_y, scale,
-                                                      label, title, description, url)
+            work(req.body)
         except Exception as exc:
             logger.error(u'保存收到的消息失败，error msg:%s' % exc.message, exc_info=True)
-
 
         try:
             result = public.replay_text(from_user_name, user_name, u'哈哈')
@@ -97,5 +91,3 @@ class WeChat(View):
         except Exception as exc:
             logger.error(u'发生异常，error msg:%s' % exc.message, exc_info=True)
             return HttpResponse('', content_type='application/xml')
-
-
