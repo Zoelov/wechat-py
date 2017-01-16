@@ -71,13 +71,10 @@ class WeChat(View):
 
     def post(self, req):
         logger.info('接收到消息')
-        logger.info('body=%s' % req.body)
         tree = ET.fromstring(req.body)
         user_name = tree.find('ToUserName').text if tree.find('ToUserName') is not None else None
         from_user_name = tree.find('FromUserName').text if tree.find('FromUserName') is not None else None
         msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
-
-        logger.info(vars())
 
         try:
             work(req.body)
