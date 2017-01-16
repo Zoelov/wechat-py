@@ -171,8 +171,8 @@ LOGGING = {
     'loggers': {
         '': {
             'handlers': ['console', 'default', 'wechat'],
-            'level': 'DEBUG',
-            'propagate': True
+            'level': 'INFO',
+            'propagate': False
         }
     }
 }

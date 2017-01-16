@@ -117,7 +117,7 @@ def menu_event(param):
         msg_type = tree.find('MsgType').text
         event = tree.find('Event').text
         key = tree.find('EventKey').text
-        count = tree.find('Count').text if tree.find('Count') is not None else None
+        count = tree.find('SendPicsInfo').find('Count').text
 
         menu_obj = orm_models.MenuEvent.objects.add_event(from_user_name, create_time, event, key, count)
         ret = public.replay_text(from_user_name, to_user_name, u'图片')
