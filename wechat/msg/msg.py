@@ -21,7 +21,7 @@ def text(param):
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, msg)
         ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        orm_models.RecMessage.objects.update_status(obj, 1)
+        # orm_models.RecMessage.objects.update_status(obj, 1)
         return ret
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
@@ -193,4 +193,5 @@ def process_msg(param):
             ret = link(param)
     except Exception as exc:
         logger.error(u'异常,error msg:%s'% exc.message, exc_info=True)
-    return HttpResponse(ret, content_type='application/xml')
+        raise exc
+    return ret

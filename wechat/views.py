@@ -42,9 +42,7 @@ def work(param):
         p1.start()
         p1.join()
     else:
-        p2 = Process(target=msg.process_msg, args=(param,))
-        p2.start()
-        p2.join()
+        return msg.process_msg(param)
 
 
 class WeChat(View):
@@ -77,7 +75,8 @@ class WeChat(View):
         msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
 
         try:
-            work(req.body)
+            ret = work(req.body)
         except Exception as exc:
             logger.error(u'保存收到的消息失败，error msg:%s' % exc.message, exc_info=True)
+        return HttpResponse(ret, content_type='application/xml')
 
