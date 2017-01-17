@@ -102,6 +102,8 @@ ACCESS_OPEN_ID = 'https://api.weixin.qq.com/cgi-bin/user/get?'
 ACCESS_USER_URL = 'https://api.weixin.qq.com/cgi-bin/user/info?'
 CREATE_MENU_URL = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='
 DELETE_MENU_URL = 'https://api.weixin.qq.com/cgi-bin/menu/delete?access_token='
+
+SIMSIMI_URL = 'http://sandbox.api.simsimi.com/request.p'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 

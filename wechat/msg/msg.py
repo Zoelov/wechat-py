@@ -4,6 +4,7 @@ import logging
 from orm import models as orm_models
 from utils import public
 from django.http import HttpResponse
+from wechat.simsimi import chat
 
 
 logger = logging.getLogger(__name__)
@@ -20,9 +21,13 @@ def text(param):
     msg = tree.find('Content').text if tree.find('Content') is not None else None
     try:
         obj = orm_models.RecMessage.objects.add_msg(from_user_name, msg_type, create_time, msg_id, msg)
-        ret = public.replay_text(from_user_name, user_name, u'哈哈')
-        # orm_models.RecMessage.objects.update_status(obj, 1)
-        return ret
+        chat_replay = chat.chat_sim(msg)
+        if chat_replay:
+            ret = public.replay_text(from_user_name, user_name, chat_replay)
+            orm_models.RecMessage.objects.update_status(obj, 1)
+            return ret
+        else:
+            return None
     except Exception as exc:
         logger.error(u'处理消息发生异常，error msg:%s' % exc.message, exc_info=True)
         raise exc
