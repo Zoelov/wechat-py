@@ -12,7 +12,7 @@ def chat_sim(msg):
     :param msg:
     :return:
     """
-    url = settings.SIMSIMI_URL + '?key=%s&lc=zh&ft=1.0&text=%s' % (settings.SECRET_KEY, msg)
+    url = settings.SIMSIMI_URL + '?key=%s&lc=zh&ft=1.0&text=%s' % (settings.SIM_KEY, msg)
     logger.info('url=%s' % url)
     try:
         ret = RequestAPI.access_data(url, 'GET')
