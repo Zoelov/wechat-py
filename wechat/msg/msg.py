@@ -173,21 +173,24 @@ def process_msg(param):
     msg_type = tree.find('MsgType').text if tree.find('MsgType') is not None else None
 
     ret = ''
-    if msg_type == 'text':
-        ret = text(param)
+    try:
+        if msg_type == 'text':
+            ret = text(param)
 
-    if msg_type == 'image':
-        ret = image(param)
+        if msg_type == 'image':
+            ret = image(param)
 
-    if msg_type == 'voice':
-        ret = voice(param)
+        if msg_type == 'voice':
+            ret = voice(param)
 
-    if msg_type in ('video', 'shortvideo'):
-        ret = video(param)
+        if msg_type in ('video', 'shortvideo'):
+            ret = video(param)
 
-    if msg_type == 'location':
-        ret = location(param)
+        if msg_type == 'location':
+            ret = location(param)
 
-    if msg_type == 'link':
-        ret = link(param)
+        if msg_type == 'link':
+            ret = link(param)
+    except Exception as exc:
+        logger.error(u'异常,error msg:%s'% exc.message, exc_info=True)
     return HttpResponse(ret, content_type='application/xml')
